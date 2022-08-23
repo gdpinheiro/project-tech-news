@@ -33,7 +33,19 @@ def scrape_novidades(html_content):
 
 # Requisito 3
 def scrape_next_page_link(html_content):
-    """Seu código deve vir aqui"""
+    if "<!doctype html>" in html_content:
+        selector = Selector(text=html_content)
+        next_page_link = selector.css(".next.page-numbers::attr(href)").get()
+        if next_page_link.__len__() == 0:
+            return None
+        else:
+            return next_page_link
+    else:
+        return []
+
+
+html = fetch("https://blog.betrybe.com/")
+print(scrape_next_page_link(html))
 
 
 # Requisito 4
