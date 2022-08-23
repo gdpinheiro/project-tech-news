@@ -41,7 +41,7 @@ def scrape_next_page_link(html_content):
         else:
             return next_page_link
     else:
-        return []
+        return None
 
 
 html = fetch("https://blog.betrybe.com/")
