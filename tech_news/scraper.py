@@ -100,4 +100,4 @@ def get_tech_news(amount):
 
     create_news(news_pages)
 
-    return news_links
+    return news_pages
