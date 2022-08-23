@@ -59,8 +59,9 @@ def scrape_noticia(html_content):
             ).re(r"\d comments")[0][0]
         except Exception:
             comments_count = 0
-
-        summary = selector.css(".entry-content p::text").get()
+        summary = "".join(
+            selector.css(".entry-content p:nth-of-type(1) *::text").getall()
+        )
         tags = selector.css(".post-tags li a::text").getall()
         category = selector.css(".category-style .label::text").get()
 
@@ -76,6 +77,16 @@ def scrape_noticia(html_content):
         }
     else:
         return None
+
+
+html = fetch("https://blog.betrybe.com/tecnologia/arquivo-bin/")
+
+# html = fetch(
+#     "https://blog.betrybe.com/carreira/passos-fundamentais-para-aprender-a-programar/"
+# )
+
+
+print(scrape_noticia(html))
 
 
 # Requisito 5
