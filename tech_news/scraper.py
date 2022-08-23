@@ -1,7 +1,7 @@
 import requests
 import time
 from parsel import Selector
-import database
+from tech_news.database import create_news
 
 
 # Requisito 1
@@ -97,6 +97,6 @@ def get_tech_news(amount):
     for news in news_links:
         page = scrape_noticia(news)
         news_pages.append(page)
-        database.create_news(page)
+        create_news(page)
 
     return news_links
