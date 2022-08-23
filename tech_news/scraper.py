@@ -95,7 +95,7 @@ def get_tech_news(amount):
     news_pages = []
 
     for news in news_links:
-        page = scrape_noticia(news)
+        page = scrape_noticia(fetch(news))
         news_pages.append(page)
 
     create_news(news_pages)
