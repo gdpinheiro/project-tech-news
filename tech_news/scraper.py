@@ -20,12 +20,15 @@ def fetch(url):
 
 # Requisito 2
 def scrape_novidades(html_content):
-    selector = Selector(text=html_content)
-    links = selector.css(".cs-overlay-link::attr(href)").getall()
-    if links.__len__() == 0:
-        return None
+    if "<!doctype html>" in html_content:
+        selector = Selector(text=html_content)
+        links = selector.css(".cs-overlay-link::attr(href)").getall()
+        if links.__len__() == 0:
+            return None
+        else:
+            return links
     else:
-        return links
+        return []
 
 
 # Requisito 3
