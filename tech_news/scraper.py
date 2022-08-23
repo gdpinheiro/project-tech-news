@@ -60,7 +60,7 @@ def scrape_noticia(html_content):
         except Exception:
             comments_count = 0
         summary = "".join(
-            selector.css(".entry-content p:nth-of-type(1) *::text").getall()
+            selector.css(".entry-content > p:nth-of-type(1) *::text").getall()
         ).strip()
         tags = selector.css(".post-tags li a::text").getall()
         category = selector.css(".category-style .label::text").get()
