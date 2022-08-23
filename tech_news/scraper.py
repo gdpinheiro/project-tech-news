@@ -11,7 +11,7 @@ def fetch(url):
             url, headers={"user-agent": "Fake user-agent"}, timeout=3
         )
         if response.status_code == 200:
-            return response.headers["Content-Type"]
+            return response.text
         else:
             return None
     except requests.ReadTimeout:
