@@ -1,6 +1,7 @@
 import requests
 import time
 from parsel import Selector
+import database
 
 
 # Requisito 1
@@ -79,16 +80,23 @@ def scrape_noticia(html_content):
         return None
 
 
-html = fetch("https://blog.betrybe.com/tecnologia/arquivo-bin/")
-
-# html = fetch(
-#     "https://blog.betrybe.com/carreira/passos-fundamentais-para-aprender-a-programar/"
-# )
-
-
-print(scrape_noticia(html))
-
-
 # Requisito 5
 def get_tech_news(amount):
-    """Seu código deve vir aqui"""
+    news_links = []
+    url = "https://blog.betrybe.com/"
+
+    while news_links.__len__() < amount:
+        for news in scrape_novidades(fetch(url)):
+            news_links.append(news)
+        url = scrape_next_page_link(fetch(url))
+
+    del news_links[amount:]
+
+    news_pages = []
+
+    for news in news_links:
+        page = scrape_noticia(news)
+        news_pages.append(page)
+        database.create_news(page)
+
+    return news_links
