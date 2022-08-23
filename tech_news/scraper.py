@@ -50,7 +50,7 @@ def scrape_noticia(html_content):
         selector = Selector(text=html_content)
 
         url = selector.css("head link[rel=canonical]::attr(href)").get()
-        title = selector.css(".entry-title::text").get()
+        title = selector.css(".entry-title::text").get().strip()
         timestamp = selector.css(".meta-date::text").get()
         writer = selector.css(".author a::text").get()
         try:
