@@ -44,13 +44,37 @@ def scrape_next_page_link(html_content):
         return None
 
 
-html = fetch("https://blog.betrybe.com/")
-print(scrape_next_page_link(html))
-
-
 # Requisito 4
 def scrape_noticia(html_content):
-    """Seu código deve vir aqui"""
+    if "<!doctype html>" in html_content:
+        selector = Selector(text=html_content)
+
+        url = selector.css("head link[rel=canonical]::attr(href)").get()
+        title = selector.css(".entry-title::text").get()
+        timestamp = selector.css(".meta-date::text").get()
+        writer = selector.css(".author a::text").get()
+        comments_count = (
+            selector.css(".post-comments .title-block::text").re(
+                r"\d comments"
+            )[0][0]
+            or 0
+        )
+        summary = selector.css(".entry-content p::text").get()
+        tags = selector.css(".post-tags li a::text").getall()
+        category = selector.css(".category-style .label::text").get()
+
+        return {
+            "url": url,
+            "title": title,
+            "timestamp": timestamp,
+            "writer": writer,
+            "comments_count": int(comments_count),
+            "summary": summary,
+            "tags": tags,
+            "category": category,
+        }
+    else:
+        return None
 
 
 # Requisito 5
