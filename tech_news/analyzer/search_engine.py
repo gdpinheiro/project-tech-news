@@ -42,7 +42,7 @@ def search_by_date(date):
 def search_by_tag(tag):
     search = search_news(
         {
-            "tags": tag,
+            "tags": {"$regex": tag, "$options": "i"},
         }
     )
 
